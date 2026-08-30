@@ -1,0 +1,7 @@
+@font-face {
+    font-family: vazir;
+    src: url(./Dirooz-FD.woff2) format(woff2);
+}
+body{
+    font-family: vazir;
+}
