@@ -1,0 +1,2042 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LUXE MOTO | موتورسیکلت‌های لوکس و اسپرت</title>
+    <style>
+      :root {
+        --background: #070707;
+        --foreground: #f4f1ea;
+        --muted: #a7a29a;
+        --border: rgba(255, 255, 255, 0.11);
+        --surface: #11100f;
+        --surface2: #171614;
+        --graphite: #242321;
+        --gold: #c8a45d;
+        --goldSoft: #d8b66e;
+        --metal: #a9a9a5;
+        --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+        --shadow-elegant: 0 18px 60px rgba(0, 0, 0, 0.32);
+        --shadow-lift: 0 30px 80px rgba(0, 0, 0, 0.48);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--background);
+        color: var(--foreground);
+        font-family: Vazirmatn, Tahoma, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button,
+      select,
+      input,
+      textarea {
+        font: inherit;
+        color: inherit;
+      }
+      img,
+      video {
+        display: block;
+        max-width: 100%;
+      }
+      .num {
+        font-family: Tahoma, Arial, sans-serif;
+      }
+      .container-lux {
+        width: min(100% - 40px, 1180px);
+        margin-inline: auto;
+      }
+      .glass {
+        border: 1px solid var(--border);
+        background: rgba(18, 17, 15, 0.54);
+        backdrop-filter: blur(18px);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      }
+      .glass-strong {
+        border: 1px solid var(--border);
+        background: rgba(18, 17, 15, 0.82);
+        backdrop-filter: blur(24px);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      }
+      .hairline {
+        border: 1px solid var(--border);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      }
+      .gold {
+        color: var(--gold);
+      }
+      .text-gold-gradient {
+        background: linear-gradient(
+          135deg,
+          #f6dda2 0%,
+          var(--gold) 42%,
+          #8f7134 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border: 0;
+        border-radius: 999px;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.5s var(--ease-lux);
+      }
+      .btn.goldbtn {
+        height: 3.5rem;
+        padding: 0 2.5rem;
+        background: var(--gold);
+        color: #100d08;
+        font-weight: 600;
+        box-shadow: 0 18px 40px -20px var(--gold);
+      }
+      .btn.goldbtn:hover {
+        background: var(--goldSoft);
+        transform: translateY(-2px);
+      }
+      .btn.glassbtn {
+        height: 3.5rem;
+        padding: 0 2.5rem;
+      }
+      .btn.quiet {
+        height: 2.25rem;
+        padding: 0 1rem;
+        color: var(--muted);
+        background: transparent;
+      }
+      .btn.sm {
+        height: 2.25rem;
+        padding: 0 1rem;
+        font-size: 12px;
+      }
+      .btn.lg {
+        height: 3rem;
+        padding: 0 2rem;
+      }
+      .section {
+        padding: 7rem 0;
+      }
+      .section-head {
+        margin-bottom: 3rem;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1.5rem;
+      }
+      .section-head.center {
+        display: block;
+        text-align: center;
+      }
+      .eyebrow {
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--gold);
+        font-size: 12px;
+        letter-spacing: 0.3em;
+      }
+      .center .eyebrow {
+        justify-content: center;
+      }
+      .eyebrow:before {
+        content: "";
+        width: 2rem;
+        height: 1px;
+        background: rgba(200, 164, 93, 0.6);
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+      h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.4;
+      }
+      .lead {
+        margin-top: 1rem;
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 2;
+      }
+      .site-header {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 50;
+        padding: 1.25rem 0;
+        transition: padding 0.7s var(--ease-lux);
+      }
+      .site-header.scrolled {
+        padding: 0.75rem 0;
+      }
+      .nav-shell {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        border-radius: 999px;
+        padding: 0.75rem 1.25rem;
+        transition: all 0.7s var(--ease-lux);
+        /* Solid background instead of backdrop blur: the fixed header sits
+           over the scrubbing hero video, and blurring it every frame is
+           very expensive. Visually identical on the dark hero. */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(18, 17, 15, 0.82);
+      }
+      .site-header.scrolled .nav-shell {
+        background: rgba(18, 17, 15, 0.92);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .logo {
+        display: grid;
+        place-items: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 999px;
+        border: 1px solid rgba(200, 164, 93, 0.4);
+        color: var(--gold);
+        font-weight: 700;
+      }
+      .brand-name {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+      }
+      .desktop-nav {
+        display: flex;
+        gap: 0.25rem;
+      }
+      .desktop-nav a {
+        position: relative;
+        padding: 0.5rem 0.75rem;
+        color: var(--muted);
+        font-size: 13px;
+        transition: 0.5s;
+      }
+      .desktop-nav a:hover,
+      .desktop-nav a.active {
+        color: var(--gold);
+      }
+      .desktop-nav a:after {
+        content: "";
+        position: absolute;
+        inset: auto 0.75rem -0.125rem;
+        height: 1px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: 0.5s var(--ease-lux);
+      }
+      .desktop-nav a:hover:after {
+        transform: scaleX(1);
+      }
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .menu-btn {
+        display: none;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: transparent;
+      }
+      .mobile-menu {
+        display: none;
+        margin-top: 0.5rem;
+        border-radius: 1.5rem;
+        padding: 1rem;
+      }
+      .mobile-menu a {
+        display: block;
+        border-radius: 1rem;
+        padding: 0.75rem 1rem;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .mobile-menu a:hover {
+        background: var(--surface2);
+        color: var(--foreground);
+      }
+      .hero-sequence {
+        position: relative;
+        height: 430svh;
+      }
+      .hero {
+        position: sticky;
+        top: 0;
+        height: 100svh;
+        min-height: 680px;
+        overflow: hidden;
+        isolation: isolate;
+        contain: layout paint;
+        background: var(--background);
+      }
+      .hero video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        background: var(--background);
+      }
+      .hero:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(7, 7, 7, 0.65);
+        opacity: var(--hero-shade, 0.12);
+        will-change: opacity;
+      }
+      .hero:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          var(--background),
+          rgba(7, 7, 7, 0.25),
+          rgba(7, 7, 7, 0.6)
+        );
+        opacity: var(--hero-grade, 0.08);
+        will-change: opacity;
+      }
+      .hero-intro {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        pointer-events: none;
+        color: #050505;
+        will-change: transform, opacity;
+      }
+      .hero-intro-inner {
+        opacity: 0;
+        transform: translateY(14px);
+        animation: introIn 1.1s var(--ease-lux) 0.18s forwards;
+      }
+      .hero-intro h2 {
+        font-size: clamp(1.35rem, 3.2vw, 2.7rem);
+        font-weight: 900;
+        line-height: 1.7;
+        color: #050505;
+        text-shadow: 0 1px 24px rgba(255, 255, 255, 0.35);
+      }
+      .scroll-cue {
+        margin-top: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        font-weight: 800;
+        color: #050505;
+        opacity: 0;
+        animation: introIn 0.9s var(--ease-lux) 0.55s forwards;
+      }
+      .scroll-icon {
+        position: relative;
+        width: 1.15rem;
+        height: 2rem;
+        border: 2px solid #050505;
+        border-radius: 999px;
+      }
+      .scroll-icon:before {
+        content: "";
+        position: absolute;
+        top: 0.35rem;
+        left: 50%;
+        width: 0.28rem;
+        height: 0.28rem;
+        border-radius: 999px;
+        background: #050505;
+        transform: translateX(-50%);
+        animation: scrollDot 1.35s ease-in-out infinite;
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(24px);
+        pointer-events: none;
+        will-change: transform, opacity;
+      }
+      /* Elements sitting over the scrubbing video: backdrop blur there
+         forces a full repaint every frame. Use a solid translucent
+         background instead — identical look on the dark hero, no blur
+         cost. */
+      .hero .glass {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(18, 17, 15, 0.72);
+      }
+      .hero-inner.hero-ready {
+        pointer-events: auto;
+      }
+      .hero-reveal {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      .pill {
+        margin-bottom: 2rem;
+        border-radius: 999px;
+        padding: 0.5rem 1.25rem;
+        color: var(--gold);
+        font-size: 11px;
+        letter-spacing: 0.25em;
+      }
+      .hero h1 {
+        max-width: 58rem;
+        font-size: clamp(2.25rem, 7vw, 4.5rem);
+        font-weight: 800;
+        line-height: 1.45;
+        text-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      }
+      .hero p {
+        margin-top: 1.75rem;
+        max-width: 42rem;
+        color: var(--muted);
+        font-size: 1.12rem;
+        line-height: 2.25;
+      }
+      .hero-actions {
+        margin-top: 2.5rem;
+        display: flex;
+        gap: 0.75rem;
+      }
+      @keyframes introIn {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes scrollDot {
+        0%,
+        100% {
+          opacity: 0.25;
+          transform: translate(-50%, 0);
+        }
+        45% {
+          opacity: 1;
+          transform: translate(-50%, 0.85rem);
+        }
+      }
+      .search {
+        position: relative;
+        z-index: 3;
+        margin-top: -5rem;
+      }
+      .hero-sequence > .search {
+        opacity: 0;
+        transform: translateY(24px);
+        pointer-events: none;
+        will-change: transform, opacity;
+      }
+      .hero-sequence > .search.hero-ready {
+        pointer-events: auto;
+      }
+      /* backdrop-filter over a video that is being scrubbed frame by frame
+         re-blurs the whole layer on every seek. While the sequence is still
+         scrolling we use a solid translucent background (same look on the
+         dark hero); the real blur is restored by JS once the video has come
+         to rest at the end of the sequence, where it costs nothing. */
+      .hero-sequence > .search .search-box {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(18, 17, 15, 0.92);
+      }
+      .hero-sequence > .search.hero-settled .search-box {
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        background: rgba(18, 17, 15, 0.82);
+      }
+      .search-box {
+        border-radius: 2rem;
+        padding: 2rem;
+        box-shadow: var(--shadow-lift);
+      }
+      .search-title {
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .search-title h2 {
+        font-size: 14px;
+      }
+      .search-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+      }
+      .field span {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .field select {
+        width: 100%;
+        height: 3rem;
+        border-radius: 1rem;
+        border: 1px solid var(--border);
+        background: rgba(23, 22, 20, 0.8);
+        padding: 0 1rem;
+        outline: 0;
+      }
+      .field select:hover,
+      .field select:focus {
+        border-color: rgba(200, 164, 93, 0.6);
+      }
+      .advanced {
+        display: none;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+      }
+      .advanced.open {
+        display: grid;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        border-radius: 2rem;
+        overflow: hidden;
+        background: var(--border);
+      }
+      .stat {
+        background: var(--surface);
+        padding: 2rem;
+      }
+      .stat strong {
+        display: block;
+        color: var(--gold);
+        font-size: 2.25rem;
+      }
+      .stat span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .featured {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+      .car-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 1.5rem;
+        background: var(--surface);
+        transition: 0.7s var(--ease-lux);
+      }
+      .car-card:hover {
+        transform: translateY(-0.5rem);
+        border-color: rgba(200, 164, 93, 0.3);
+        box-shadow: var(--shadow-lift);
+      }
+      .car-img {
+        position: relative;
+        aspect-ratio: 16/10;
+        overflow: hidden;
+      }
+      .car-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1.2s var(--ease-lux);
+      }
+      .car-card:hover img {
+        transform: scale(1.08);
+      }
+      .car-img:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          var(--background),
+          rgba(7, 7, 7, 0.25),
+          transparent
+        );
+        opacity: 0.9;
+      }
+      .badges {
+        position: absolute;
+        inset: 1.25rem 1.25rem auto;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+      }
+      .badge {
+        border-radius: 999px;
+        padding: 0.25rem 0.75rem;
+        font-size: 11px;
+      }
+      .card-body {
+        padding: 1.5rem;
+      }
+      .card-body h3 {
+        font-size: 1.25rem;
+      }
+      .card-body > p {
+        margin-top: 0.25rem;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .specs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        margin: 1.25rem 0;
+        padding: 1rem 0;
+        border-block: 1px solid rgba(255, 255, 255, 0.08);
+        list-style: none;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .specs li {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .price-row {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .price-row small {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .price-row strong {
+        display: block;
+        margin-top: 0.25rem;
+        color: var(--gold);
+        font-size: 1.08rem;
+      }
+      .view {
+        color: var(--muted);
+        font-size: 14px;
+        transition: 0.5s;
+      }
+      .car-card:hover .view {
+        color: var(--gold);
+      }
+      .showroom {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      .showroom img {
+        border-radius: 2rem;
+      }
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .service {
+        border-radius: 1.75rem;
+        background: var(--surface);
+        padding: 2rem;
+      }
+      .service .icon {
+        display: grid;
+        place-items: center;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 999px;
+        background: var(--graphite);
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+      }
+      .service p {
+        margin-top: 0.75rem;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 2;
+      }
+      .calculator {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        border-radius: 2rem;
+        background: var(--surface);
+        padding: 3rem;
+      }
+      .ranges {
+        display: grid;
+        gap: 2rem;
+      }
+      .range-head {
+        margin-bottom: 0.75rem;
+        display: flex;
+        justify-content: space-between;
+      }
+      .range-head span:first-child {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .range-head span:last-child {
+        color: var(--gold);
+        font-size: 14px;
+      }
+      .range input {
+        width: 100%;
+        accent-color: var(--gold);
+      }
+      .result {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 2rem;
+        border-radius: 1.5rem;
+        background: var(--surface2);
+        padding: 2rem;
+      }
+      .result-row {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 1rem;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .result-row strong {
+        color: var(--foreground);
+      }
+      .result-row.highlight strong {
+        color: var(--gold);
+        font-size: 1.12rem;
+      }
+      .compare-buttons,
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .chip {
+        height: 2.25rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: transparent;
+        padding: 0 1rem;
+        color: var(--muted);
+        font-size: 12px;
+        transition: 0.5s;
+      }
+      .chip.active,
+      .chip:hover {
+        border-color: rgba(200, 164, 93, 0.6);
+        background: rgba(200, 164, 93, 0.1);
+        color: var(--gold);
+      }
+      .table-wrap {
+        margin-top: 2rem;
+        overflow: auto;
+        border-radius: 1.75rem;
+        background: var(--surface);
+      }
+      table {
+        width: 100%;
+        min-width: 42rem;
+        border-collapse: collapse;
+        text-align: right;
+        font-size: 14px;
+      }
+      th,
+      td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1.25rem;
+      }
+      th {
+        font-weight: 400;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      td.goldcell {
+        color: var(--gold);
+      }
+      th img {
+        width: 100%;
+        height: 6rem;
+        border-radius: 0.75rem;
+        object-fit: cover;
+        margin-bottom: 0.75rem;
+      }
+      .testimonials {
+        display: flex;
+        gap: 1.5rem;
+        overflow: auto;
+        margin-inline: -1.25rem;
+        padding: 0 1.25rem 1rem;
+        scroll-snap-type: x mandatory;
+      }
+      .testimonial {
+        width: 24rem;
+        max-width: 85vw;
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        border-radius: 1.75rem;
+        padding: 2rem;
+      }
+      .person {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .avatar {
+        display: grid;
+        place-items: center;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 999px;
+        background: var(--graphite);
+        color: var(--gold);
+      }
+      .stars {
+        margin-top: 1.25rem;
+        color: var(--gold);
+      }
+      blockquote {
+        margin: 1.25rem 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 2;
+      }
+      .faq {
+        max-width: 52rem;
+        margin-inline: auto;
+      }
+      .faq-item {
+        border-bottom: 1px solid var(--border);
+      }
+      .faq-q {
+        width: 100%;
+        padding: 1.5rem 0;
+        border: 0;
+        background: transparent;
+        text-align: right;
+        font-weight: 600;
+      }
+      .faq-a {
+        display: none;
+        padding-bottom: 1.5rem;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 2;
+      }
+      .faq-item.open .faq-a {
+        display: block;
+      }
+      footer {
+        border-top: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr;
+        gap: 3rem;
+        padding: 4rem 0;
+      }
+      .footer-grid p,
+      .footer-grid li {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 2;
+      }
+      .footer-grid ul {
+        margin: 1.25rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .quick {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+      }
+      .social {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+      .social a {
+        display: grid;
+        place-items: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+      }
+      .copy {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-top: 1px solid var(--border);
+        padding: 2rem 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.8s var(--ease-lux),
+          transform 0.8s var(--ease-lux);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .hero-sequence {
+          height: auto;
+        }
+        .hero {
+          position: relative;
+        }
+        .hero-intro {
+          display: none;
+        }
+        .hero-inner,
+        .hero-reveal,
+        .search {
+          opacity: 1 !important;
+          transform: none !important;
+          pointer-events: auto !important;
+        }
+        .scroll-icon:before,
+        .hero-intro-inner,
+        .scroll-cue {
+          animation: none !important;
+        }
+      }
+      @media (max-width: 1024px) {
+        .desktop-nav {
+          display: none;
+        }
+        .menu-btn {
+          display: grid;
+          place-items: center;
+        }
+        .search-grid,
+        .featured,
+        .service-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .hero-sequence {
+          height: 390svh;
+        }
+      }
+      @media (max-width: 760px) {
+        .container-lux {
+          width: min(100% - 28px, 1180px);
+        }
+        .brand-name,
+        .header-actions .quiet,
+        .header-actions .hide-sm {
+          display: none;
+        }
+        .mobile-menu.open {
+          display: block;
+        }
+        .hero {
+          min-height: 720px;
+        }
+        .hero-actions {
+          flex-direction: column;
+          width: 100%;
+        }
+        .hero-actions .btn {
+          width: 100%;
+        }
+        .search {
+          margin-top: -6rem;
+        }
+        .search-grid,
+        .advanced.open,
+        .featured,
+        .showroom,
+        .service-grid,
+        .calculator,
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+        .section {
+          padding: 5rem 0;
+        }
+        .section-head {
+          display: block;
+        }
+        .stats {
+          grid-template-columns: 1fr;
+        }
+        .copy {
+          flex-direction: column;
+        }
+        .calculator {
+          padding: 2rem;
+        }
+        .search-box {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header" id="header">
+      <div class="container-lux">
+        <div class="nav-shell glass" id="navShell">
+          <a href="#" class="brand" aria-label="لوکس موتو، صفحه اصلی"
+            ><span class="logo">LM</span
+            ><span class="brand-name">LUXE MOTO</span></a
+          >
+          <nav class="desktop-nav">
+            <a class="active" href="#">صفحه اصلی</a><a href="#cars">موتورها</a
+            ><a href="#brands">برندها</a><a href="#services">خدمات</a
+            ><a href="#purchase">شرایط خرید</a><a href="#about">درباره ما</a
+            ><a href="#contact">تماس با ما</a>
+          </nav>
+          <div class="header-actions">
+            <button class="btn quiet sm">ورود</button
+            ><a class="btn goldbtn sm hide-sm" href="#cars">مشاهده موتورها</a
+            ><button class="menu-btn" id="menuBtn" aria-label="باز کردن منو">
+              ☰
+            </button>
+          </div>
+        </div>
+        <div class="mobile-menu glass-strong" id="mobileMenu">
+          <a href="#">صفحه اصلی</a><a href="#cars">موتورها</a
+          ><a href="#brands">برندها</a><a href="#services">خدمات</a
+          ><a href="#purchase">شرایط خرید</a><a href="#about">درباره ما</a
+          ><a href="#contact">تماس با ما</a>
+          <div style="display: flex; gap: 0.5rem; padding-top: 0.5rem">
+            <a class="btn goldbtn sm" style="flex: 1" href="#cars"
+              >مشاهده موتورها</a
+            ><button class="btn glassbtn sm">ورود</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="hero-sequence" id="heroSequence">
+        <section class="hero" id="hero">
+          <video
+            id="heroVideo"
+            muted
+            playsinline
+            preload="auto"
+            disablepictureinpicture
+            aria-hidden="true"
+            tabindex="-1"
+            poster="assets/hero-poster.jpg"
+            src="assets/hero%20video.mp4"
+          ></video>
+          <div
+            class="hero-intro"
+            id="heroIntro"
+            aria-label="راهنمای شروع اسکرول"
+          >
+            <div class="hero-intro-inner">
+              <h2>تجربه رانندگی شما با اسکرول آغاز می‌شود</h2>
+              <div class="scroll-cue">
+                <span>اسکرول کنید</span
+                ><span class="scroll-icon" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+          <div class="container-lux hero-inner">
+            <span class="pill glass hero-reveal">LUXE MOTO · TEHRAN</span>
+            <h1 class="hero-reveal">
+              موتور <span class="text-gold-gradient">رؤیایی</span> شما، اینجاست
+            </h1>
+            <p class="hero-reveal">
+              مجموعه‌ای از موتورسیکلت‌های لوکس، اسپرت و کلاسیک را با تجربه‌ای
+              متفاوت و حرفه‌ای کشف کنید.
+            </p>
+            <div class="hero-actions hero-reveal">
+              <a class="btn goldbtn" href="#cars">مشاهده موتورها ←</a
+              ><a class="btn glassbtn glass" href="#contact">درخواست مشاوره</a>
+            </div>
+          </div>
+        </section>
+        <section class="search container-lux" aria-label="جستجوی موتور">
+          <div class="search-box glass-strong">
+            <div class="search-title">
+              <h2>☷ جستجوی موتور</h2>
+              <button class="btn quiet sm" id="advancedBtn">
+                جستجوی پیشرفته
+              </button>
+            </div>
+            <div class="search-grid">
+              <label class="field"
+                ><span>برند</span
+                ><select>
+                  <option>همه</option>
+                  <option>دوکاتی</option>
+                  <option>هارلی دیویدسون</option>
+                  <option>بی‌ام‌و</option>
+                  <option>کاوازاکی</option>
+                  <option>تریومف</option>
+                  <option>آپریلیا</option>
+                </select></label
+              >
+              <label class="field"
+                ><span>مدل</span
+                ><select>
+                  <option>همه</option>
+                  <option>Panigale V4</option>
+                  <option>Street Glide</option>
+                  <option>Ninja H2</option>
+                  <option>R 1250 GS</option>
+                </select></label
+              >
+              <label class="field"
+                ><span>سال ساخت</span
+                ><select>
+                  <option>همه</option>
+                  <option>۲۰۲۵</option>
+                  <option>۲۰۲۴</option>
+                  <option>۲۰۲۳</option>
+                  <option>۲۰۲۲</option>
+                </select></label
+              >
+              <label class="field"
+                ><span>نوع موتور</span
+                ><select>
+                  <option>همه</option>
+                  <option>اسپرت</option>
+                  <option>کروز</option>
+                  <option>ادونچر</option>
+                  <option>نیکد</option>
+                </select></label
+              >
+              <label class="field"
+                ><span>حداقل قیمت</span
+                ><select>
+                  <option>همه</option>
+                  <option>۵۰۰ میلیون</option>
+                  <option>۱ میلیارد</option>
+                  <option>۲ میلیارد</option>
+                </select></label
+              >
+              <label class="field"
+                ><span>حداکثر قیمت</span
+                ><select>
+                  <option>همه</option>
+                  <option>۳ میلیارد</option>
+                  <option>۵ میلیارد</option>
+                  <option>۸ میلیارد</option>
+                </select></label
+              >
+              <label class="field"
+                ><span>وضعیت موتور</span
+                ><select>
+                  <option>همه</option>
+                  <option>موجود</option>
+                  <option>رزرو شده</option>
+                  <option>به‌زودی</option>
+                </select></label
+              >
+              <div style="display: flex; align-items: end">
+                <button class="btn goldbtn lg" style="width: 100%">
+                  ⌕ جستجوی موتور
+                </button>
+              </div>
+            </div>
+            <div class="search-grid advanced" id="advanced">
+              <label class="field"
+                ><span>گیربکس</span
+                ><select>
+                  <option>همه</option>
+                  <option>دستی</option>
+                  <option>اتوماتیک (DCT)</option>
+                </select></label
+              ><label class="field"
+                ><span>سوخت</span
+                ><select>
+                  <option>همه</option>
+                  <option>بنزین</option>
+                  <option>برقی</option>
+                </select></label
+              ><label class="field"
+                ><span>رنگ</span
+                ><select>
+                  <option>همه</option>
+                  <option>مشکی</option>
+                  <option>سفید</option>
+                  <option>خاکستری</option>
+                  <option>نقره‌ای</option>
+                </select></label
+              ><label class="field"
+                ><span>کارکرد</span
+                ><select>
+                  <option>همه</option>
+                  <option>زیر ۱۰ هزار</option>
+                  <option>زیر ۵۰ هزار</option>
+                  <option>بالای ۵۰ هزار</option>
+                </select></label
+              >
+            </div>
+          </div>
+        </section>
+      </div>
+      <section class="section container-lux">
+        <div class="stats reveal">
+          <div class="stat">
+            <strong data-count="120">+۰</strong
+            ><span>موتور خاص و کارشناسی‌شده</span>
+          </div>
+          <div class="stat">
+            <strong data-count="12">+۰</strong><span>برند لوکس بین‌المللی</span>
+          </div>
+          <div class="stat">
+            <strong data-count="8">+۰</strong><span>سال تجربه تخصصی</span>
+          </div>
+          <div class="stat">
+            <strong data-count="96">+۰</strong><span>درصد رضایت مشتریان</span>
+          </div>
+        </div>
+      </section>
+      <section class="section container-lux" id="cars">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">منتخب هفته</div>
+            <h2>موتورهای شاخص</h2>
+            <p class="lead">
+              گلچینی از خاص‌ترین گزینه‌های موجود در شوروم لوکس موتو.
+            </p>
+          </div>
+          <a class="btn glassbtn glass" href="#">مشاهده همه موتورها</a>
+        </div>
+        <div class="featured" id="featured"></div>
+      </section>
+      <section class="section container-lux" id="about">
+        <div class="showroom reveal">
+          <img
+            src="./assets/moto-showroom.jpg"
+            alt="شوروم لوکس موتو"
+            loading="lazy"
+            decoding="async"
+          />
+          <div>
+            <div class="eyebrow">تجربه خرید متفاوت</div>
+            <h2>شورومی برای انتخاب‌های دقیق و لوکس</h2>
+            <p class="lead">
+              از کارشناسی فنی و بدنه تا قیمت‌گذاری شفاف، مشاوره اختصاصی و تحویل
+              تشریفاتی؛ همه چیز برای یک خرید مطمئن و آرام طراحی شده است.
+            </p>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                margin-top: 2rem;
+              "
+            >
+              <img
+                src="./assets/moto-detail-engine.jpg"
+                alt="نمای نزدیک موتور"
+                loading="lazy"
+                decoding="async"
+                style="border-radius: 1.25rem"
+              /><img
+                src="./assets/moto-detail-wheel.jpg"
+                alt="جزئیات چرخ و ترمز"
+                loading="lazy"
+                decoding="async"
+                style="border-radius: 1.25rem"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section container-lux" id="services">
+        <div class="section-head center reveal">
+          <div>
+            <div class="eyebrow">خدمات</div>
+            <h2>از انتخاب تا تحویل، همراه شما هستیم</h2>
+            <p class="lead">
+              فرایندی حرفه‌ای برای خرید، فروش، معاوضه و تأمین موتورهای خاص.
+            </p>
+          </div>
+        </div>
+        <div class="service-grid reveal">
+          <article class="service hairline">
+            <div class="icon">✓</div>
+            <h3>کارشناسی تخصصی</h3>
+            <p>
+              بررسی کامل اصالت، بدنه، فنی، آپشن‌ها و سوابق موتور پیش از معامله.
+            </p>
+          </article>
+          <article class="service hairline">
+            <div class="icon">↔</div>
+            <h3>معاوضه و فروش</h3>
+            <p>
+              قیمت‌گذاری شفاف و امکان معاوضه موتور با گزینه‌های موجود در شوروم.
+            </p>
+          </article>
+          <article class="service hairline">
+            <div class="icon">◈</div>
+            <h3>تأمین سفارشی</h3>
+            <p>
+              جستجو و تأمین موتورهای کمیاب مطابق سلیقه، بودجه و زمان‌بندی شما.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="section container-lux" id="purchase">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">شرایط خرید</div>
+            <h2>محاسبه خرید اقساطی</h2>
+            <p class="lead">
+              نمایش ظاهری محاسبه‌گر مطابق نسخه اصلی؛ ارسال درخواست عملیاتی نیست.
+            </p>
+          </div>
+        </div>
+        <div class="calculator hairline reveal">
+          <div class="ranges">
+            <label class="range"
+              ><div class="range-head">
+                <span>قیمت موتور</span
+                ><span id="totalText">۲ میلیارد تومان</span>
+              </div>
+              <input
+                id="total"
+                type="range"
+                min="300000000"
+                max="8000000000"
+                step="100000000"
+                value="2000000000" /></label
+            ><label class="range"
+              ><div class="range-head">
+                <span>مبلغ پیش‌پرداخت</span
+                ><span id="downText">۱ میلیارد تومان</span>
+              </div>
+              <input
+                id="down"
+                type="range"
+                min="0"
+                max="4000000000"
+                step="100000000"
+                value="1000000000" /></label
+            ><label class="range"
+              ><div class="range-head">
+                <span>مدت بازپرداخت</span><span id="monthsText">۲۴ ماه</span>
+              </div>
+              <input
+                id="months"
+                type="range"
+                min="6"
+                max="36"
+                step="6"
+                value="24"
+            /></label>
+          </div>
+          <div class="result hairline">
+            <dl>
+              <div class="result-row">
+                <dt>مبلغ پیش‌پرداخت</dt>
+                <strong id="rDown">۱ میلیارد تومان</strong>
+              </div>
+              <div class="result-row">
+                <dt>مبلغ باقی‌مانده</dt>
+                <strong id="rRemain">۱ میلیارد تومان</strong>
+              </div>
+              <div class="result-row">
+                <dt>تعداد اقساط</dt>
+                <strong id="rMonths">۲۴ قسط</strong>
+              </div>
+              <div class="result-row highlight">
+                <dt>مبلغ هر قسط</dt>
+                <strong id="rMonthly">۴۲ میلیون تومان</strong>
+              </div>
+            </dl>
+            <button class="btn goldbtn lg">درخواست خرید اقساطی</button>
+          </div>
+        </div>
+      </section>
+      <section class="section container-lux">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">مقایسه</div>
+            <h2>مقایسه سریع موتورها</h2>
+            <p class="lead">چند گزینه محبوب را کنار هم ببینید.</p>
+          </div>
+        </div>
+        <div class="compare-buttons" id="compareButtons"></div>
+        <div class="table-wrap hairline"><table id="compareTable"></table></div>
+      </section>
+      <section class="section container-lux">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">نظر مشتریان</div>
+            <h2>تجربه خریداران لوکس موتو</h2>
+          </div>
+        </div>
+        <div class="testimonials reveal">
+          <figure class="testimonial glass">
+            <div class="person">
+              <div class="avatar">م</div>
+              <figcaption>
+                <b>مهدی نادری</b>
+                <p class="muted">دوکاتی پانیگاله V4</p>
+              </figcaption>
+            </div>
+            <div class="stars">★★★★★</div>
+            <blockquote>
+              فرایند خرید کاملا شفاف بود و موتور دقیقا با همان کیفیتی تحویل شد
+              که وعده داده بودند.
+            </blockquote>
+          </figure>
+          <figure class="testimonial glass">
+            <div class="person">
+              <div class="avatar">س</div>
+              <figcaption>
+                <b>سارا کیانی</b>
+                <p class="muted">هارلی استریت گلاید</p>
+              </figcaption>
+            </div>
+            <div class="stars">★★★★★</div>
+            <blockquote>
+              مشاوره دقیق، رفتار حرفه‌ای و پیگیری بعد از تحویل باعث شد تجربه‌ای
+              بسیار مطمئن داشته باشم.
+            </blockquote>
+          </figure>
+          <figure class="testimonial glass">
+            <div class="person">
+              <div class="avatar">آ</div>
+              <figcaption>
+                <b>آرش راد</b>
+                <p class="muted">بی‌ام‌و R 1250 GS</p>
+              </figcaption>
+            </div>
+            <div class="stars">★★★★★</div>
+            <blockquote>
+              برای تأمین موتور خاصی که می‌خواستم زمان گذاشتند و همه جزئیات را
+              با حوصله توضیح دادند.
+            </blockquote>
+          </figure>
+        </div>
+      </section>
+      <section class="section container-lux">
+        <div class="section-head center reveal">
+          <div>
+            <div class="eyebrow">سوالات متداول</div>
+            <h2>پرسش‌های پرتکرار</h2>
+          </div>
+        </div>
+        <div class="faq reveal">
+          <div class="faq-item open">
+            <button class="faq-q">آیا موتورها کارشناسی شده‌اند؟</button>
+            <div class="faq-a">
+              بله، تمام موتورها پیش از نمایش در شوروم از نظر فنی، بدنه، اصالت و
+              سوابق بررسی می‌شوند.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">امکان خرید اقساطی وجود دارد؟</button>
+            <div class="faq-a">
+              شرایط خرید متناسب با موتور، مبلغ پیش‌پرداخت و مدت بازپرداخت به
+              صورت اختصاصی بررسی می‌شود.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">آیا امکان تأمین موتور سفارشی هست؟</button>
+            <div class="faq-a">
+              بله، تیم تأمین لوکس موتو امکان جستجو و ارائه گزینه‌های خاص را بر
+              اساس نیاز شما دارد.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer id="contact">
+      <div class="container-lux">
+        <div class="footer-grid">
+          <div>
+            <div class="brand">
+              <span class="logo">LM</span
+              ><span class="brand-name">LUXE MOTO</span>
+            </div>
+            <p style="margin-top: 1.25rem">
+              مرجع تخصصی خرید و فروش موتورهای لوکس، اسپرت و خاص؛ با کارشناسی
+              دقیق، قیمت‌گذاری شفاف و تجربه‌ای در تراز برندهای بین‌المللی.
+            </p>
+            <div class="social">
+              <a href="#" aria-label="اینستاگرام">◎</a
+              ><a href="#" aria-label="تلگرام">✈</a>
+            </div>
+          </div>
+          <nav>
+            <h3>دسترسی سریع</h3>
+            <ul class="quick">
+              <li>درباره ما</li>
+              <li>موتورها</li>
+              <li>برندها</li>
+              <li>خدمات</li>
+              <li>شرایط خرید</li>
+              <li>مجله موتور</li>
+              <li>سوالات متداول</li>
+              <li>تماس با ما</li>
+            </ul>
+          </nav>
+          <div>
+            <h3>تماس</h3>
+            <ul>
+              <li>تهران، بزرگراه چمران، خیابان یاسمن، پلاک ۴۸</li>
+              <li class="num">۰۲۱-۸۸۸۸۴۴۰۰</li>
+              <li>info@luxemoto.ir</li>
+            </ul>
+          </div>
+        </div>
+        <div class="copy">
+          <p>تمامی حقوق این وب‌سایت محفوظ است.</p>
+          <p class="num">© ۱۴۰۵ LUXE MOTO</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const faDigits = (n) => String(n).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+      const price = (n) => {
+        if (n >= 1e9) return faDigits(Math.round(n / 1e9)) + " میلیارد تومان";
+        if (n >= 1e6) return faDigits(Math.round(n / 1e6)) + " میلیون تومان";
+        return faDigits(n) + " تومان";
+      };
+      const km = (n) =>
+        n === 0
+          ? "صفر کیلومتر"
+          : faDigits(n.toLocaleString("en-US")) + " کیلومتر";
+      (function initHeroExperience() {
+        const sequence = document.getElementById("heroSequence"),
+          hero = document.getElementById("hero"),
+          video = document.getElementById("heroVideo"),
+          intro = document.getElementById("heroIntro"),
+          heroInner = document.querySelector(".hero-inner"),
+          heroItems = [...document.querySelectorAll(".hero-reveal")],
+          search = document.querySelector(".hero-sequence>.search"),
+          reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!sequence || !hero || !video || !intro || !heroInner || !search)
+          return;
+        video.pause();
+        video.loop = false;
+        video.autoplay = false;
+        const revealStatic = () => {
+          hero.style.setProperty("--hero-shade", ".65");
+          hero.style.setProperty("--hero-grade", "1");
+          intro.style.opacity = 0;
+          heroInner.classList.add("hero-ready");
+          search.classList.add("hero-ready", "hero-settled");
+          heroInner.style.opacity = 1;
+          heroInner.style.transform = "none";
+          search.style.opacity = 1;
+          search.style.transform = "none";
+          heroItems.forEach((el) => {
+            el.style.opacity = 1;
+            el.style.transform = "none";
+          });
+        };
+        if (reduced) {
+          video.addEventListener(
+            "loadedmetadata",
+            () => {
+              video.currentTime = Math.max(0, video.duration * 0.82);
+              revealStatic();
+            },
+            { once: true },
+          );
+          if (video.readyState >= 1) {
+            video.currentTime = Math.max(0, video.duration * 0.82);
+            revealStatic();
+          }
+          return;
+        }
+        let progress = 0,
+          targetTime = 0,
+          displayTime = 0,
+          duration = 1,
+          raf = 0,
+          running = false,
+          inView = true,
+          lastApplied = -1,
+          lastSeek = -1;
+        const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
+        // The hero video is encoded all-intra (every frame is a keyframe),
+        // so a seek decodes exactly one frame — but seeking twice into the
+        // same source frame is pure waste, so throttle to the frame step.
+        const SEEK_EPS = 1 / 30,
+          SETTLE_EPS = 0.012;
+        const applyReveal = (p) => {
+          // Skip redundant DOM writes when progress hasn't moved.
+          if (Math.abs(p - lastApplied) < 0.0005) return;
+          lastApplied = p;
+          const introP = clamp(p / 0.16),
+            contentP = clamp((p - 0.58) / 0.36),
+            searchP = clamp((p - 0.78) / 0.18);
+          intro.style.opacity = 1 - introP;
+          intro.style.transform = `translateY(${-18 * introP}px)`;
+          hero.style.setProperty(
+            "--hero-shade",
+            (0.12 + 0.53 * contentP).toFixed(3),
+          );
+          hero.style.setProperty(
+            "--hero-grade",
+            (0.08 + 0.92 * contentP).toFixed(3),
+          );
+          heroInner.style.opacity = contentP;
+          heroInner.style.transform = `translateY(${24 * (1 - contentP)}px)`;
+          heroInner.classList.toggle("hero-ready", contentP > 0.98);
+          heroItems.forEach((el, i) => {
+            const local = clamp((contentP - i * 0.12) / 0.44);
+            el.style.opacity = local;
+            el.style.transform = `translateY(${22 * (1 - local)}px)`;
+          });
+          search.style.opacity = searchP;
+          search.style.transform = `translateY(${24 * (1 - searchP)}px)`;
+          search.classList.toggle("hero-ready", searchP > 0.96);
+        };
+        const seekTo = (t) => {
+          if (!Number.isFinite(t)) return;
+          if (Math.abs(t - lastSeek) < SEEK_EPS) return;
+          if (video.seeking) return;
+          lastSeek = t;
+          try {
+            video.currentTime = t;
+          } catch (e) {}
+        };
+        const schedule = () => {
+          if (running || !inView || document.hidden) return;
+          running = true;
+          raf = requestAnimationFrame(tick);
+        };
+        const tick = () => {
+          running = false;
+          displayTime += (targetTime - displayTime) * 0.25;
+          if (Math.abs(targetTime - displayTime) < SETTLE_EPS)
+            displayTime = targetTime;
+          seekTo(displayTime);
+          applyReveal(progress);
+          // Restore the search box's backdrop blur only while the scrub is
+          // at rest — blurring a video that is re-seeking every frame is the
+          // single most expensive paint in the hero.
+          search.classList.toggle(
+            "hero-settled",
+            displayTime === targetTime && !video.seeking && progress > 0.78,
+          );
+          // Keep the loop alive only while still settling; it restarts
+          // on scroll. This stops the previous always-on RAF that
+          // re-seeked and repainted every frame even when idle.
+          if (displayTime !== targetTime) schedule();
+        };
+        const setProgress = (p) => {
+          progress = clamp(p);
+          targetTime = duration * progress;
+          schedule();
+        };
+        let scrollQueued = false;
+        const manualProgress = () => {
+          if (scrollQueued) return;
+          scrollQueued = true;
+          requestAnimationFrame(() => {
+            scrollQueued = false;
+            const rect = sequence.getBoundingClientRect(),
+              travel = Math.max(1, sequence.offsetHeight - innerHeight);
+            setProgress(clamp(-rect.top / travel));
+          });
+        };
+        const start = () => {
+          duration = Math.max(0.1, video.duration || 1);
+          displayTime = targetTime = 0;
+          lastSeek = -1;
+          try {
+            video.currentTime = 0.001;
+            lastSeek = 0.001;
+          } catch (e) {}
+          addEventListener("scroll", manualProgress, { passive: true });
+          addEventListener("resize", manualProgress, { passive: true });
+          new IntersectionObserver(
+            (entries) => {
+              inView = entries[0].isIntersecting;
+              if (inView) {
+                manualProgress();
+                schedule();
+              } else if (running) {
+                cancelAnimationFrame(raf);
+                running = false;
+              }
+            },
+            { threshold: 0 },
+          ).observe(sequence);
+          document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+              if (running) {
+                cancelAnimationFrame(raf);
+                running = false;
+              }
+            } else {
+              manualProgress();
+              schedule();
+            }
+          });
+          manualProgress();
+          applyReveal(progress);
+          schedule();
+        };
+        if (video.readyState >= 1) {
+          start();
+        } else {
+          video.addEventListener("loadedmetadata", start, { once: true });
+          video.load();
+        }
+        
+      })();
+            const cars = [
+        [
+          "ducati-panigale",
+          "دوکاتی",
+          "Panigale V4 S",
+          "Ducati",
+          "۲۰۲۴",
+          0,
+          4800000000,
+          "بنزین",
+          "موجود",
+          "اسپرت",
+          "assets/bike-panigale.jpg",
+          "۱۱۰۳ سی‌سی V4",
+          214,
+          "۶ سرعته",
+          "۶.۵ لیتر",
+          "۲.۹ ثانیه",
+          "زنجیر",
+        ],
+        [
+          "harley-streetglide",
+          "هارلی دیویدسون",
+          "Street Glide Special",
+          "Harley-Davidson",
+          "۲۰۲۳",
+          2400,
+          3900000000,
+          "بنزین",
+          "موجود",
+          "کروز",
+          "assets/bike-streetglide.jpg",
+          "۱۸۶۸ سی‌سی V-Twin",
+          92,
+          "۶ سرعته",
+          "۵.۶ لیتر",
+          "۴.۸ ثانیه",
+          "تسمه",
+        ],
+        [
+          "bmw-gs",
+          "بی‌ام‌و",
+          "R 1250 GS Adventure",
+          "BMW",
+          "۲۰۲۳",
+          5100,
+          2600000000,
+          "بنزین",
+          "موجود",
+          "ادونچر",
+          "assets/bike-gs.jpg",
+          "۱۱۷۰ سی‌سی باکسر",
+          136,
+          "۶ سرعته",
+          "۵.۲ لیتر",
+          "۴.۳ ثانیه",
+          "شفت",
+        ],
+        [
+          "kawasaki-h2",
+          "کاوازاکی",
+          "Ninja H2 Carbon",
+          "Kawasaki",
+          "۲۰۲۴",
+          0,
+          6500000000,
+          "بنزین",
+          "موجود",
+          "اسپرت",
+          "assets/bike-ninjah2.jpg",
+          "۹۹۸ سی‌سی سوپرشارژ",
+          231,
+          "۶ سرعته",
+          "۶.۸ لیتر",
+          "۲.۵ ثانیه",
+          "زنجیر",
+        ],
+        [
+          "triumph-speed",
+          "تریومف",
+          "Speed Triple 1200 RS",
+          "Triumph",
+          "۲۰۲۴",
+          0,
+          2900000000,
+          "بنزین",
+          "موجود",
+          "نیکد",
+          "assets/bike-speedtriple.jpg",
+          "۱۱۶۰ سی‌سی سه‌سیلندر",
+          180,
+          "۶ سرعته",
+          "۵.۹ لیتر",
+          "۳.۱ ثانیه",
+          "زنجیر",
+        ],
+        [
+          "aprilia-rsv4",
+          "آپریلیا",
+          "RSV4 Factory",
+          "Aprilia",
+          "۲۰۲۳",
+          1800,
+          3400000000,
+          "بنزین",
+          "رزرو شده",
+          "اسپرت",
+          "assets/bike-rsv4.jpg",
+          "۱۰۹۹ سی‌سی V4",
+          217,
+          "۶ سرعته",
+          "۶.۴ لیتر",
+          "۲.۸ ثانیه",
+          "زنجیر",
+        ],
+        [
+          "ducati-diavel",
+          "دوکاتی",
+          "Diavel V4",
+          "Ducati",
+          "۲۰۲۴",
+          0,
+          3100000000,
+          "بنزین",
+          "موجود",
+          "پاورکروز",
+          "assets/bike-diavel.jpg",
+          "۱۱۵۸ سی‌سی V4",
+          168,
+          "۶ سرعته",
+          "۶.۱ لیتر",
+          "۳.۰ ثانیه",
+          "زنجیر",
+        ],
+        [
+          "harley-fatboy",
+          "هارلی دیویدسون",
+          "Fat Boy 114",
+          "Harley-Davidson",
+          "۲۰۲۲",
+          7300,
+          3200000000,
+          "بنزین",
+          "موجود",
+          "کروز",
+          "assets/bike-fatboy.jpg",
+          "۱۸۶۸ سی‌سی V-Twin",
+          94,
+          "۶ سرعته",
+          "۵.۸ لیتر",
+          "۵.۰ ثانیه",
+          "تسمه",
+        ],
+        [
+          "bmw-s1000rr",
+          "بی‌ام‌و",
+          "S 1000 RR M Package",
+          "BMW",
+          "۲۰۲۴",
+          0,
+          2400000000,
+          "بنزین",
+          "موجود",
+          "اسپرت",
+          "assets/bike-s1000rr.jpg",
+          "۹۹۹ سی‌سی چهارسیلندر",
+          210,
+          "۶ سرعته",
+          "۶.۰ لیتر",
+          "۳.۰ ثانیه",
+          "زنجیر",
+        ],
+        [
+          "kawasaki-z900",
+          "کاوازاکی",
+          "Z900 RS Cafe",
+          "Kawasaki",
+          "۲۰۲۳",
+          3900,
+          1100000000,
+          "بنزین",
+          "به‌زودی",
+          "نیکد",
+          "assets/bike-z900rs.jpg",
+          "۹۴۸ سی‌سی چهارسیلندر",
+          116,
+          "۶ سرعته",
+          "۵.۵ لیتر",
+          "۳.۶ ثانیه",
+          "زنجیر",
+        ],
+      ];
+      const card = (c) =>
+        `<article class="car-card hairline reveal"><a href="#"><div class="car-img"><img src="${c[10]}" alt="${c[1]} ${c[2]}" loading="lazy" decoding="async"><div class="badges"><span class="badge glass">${c[3]}</span><span class="badge glass ${c[8] == "موجود" ? "gold" : ""}">${c[8]}</span></div></div><div class="card-body"><h3>${c[1]}</h3><p>${c[2]}</p><ul class="specs"><li>◷ <span class="num">${c[4]}</span></li><li>⌁ <span class="num">${km(c[5])}</span></li><li>⚙ <span>${c[7]}</span></li></ul><div class="price-row"><div><small>قیمت</small><strong class="num">${price(c[6])}</strong></div><span class="view">مشاهده موتور ←</span></div></div></a></article>`;
+      featured.innerHTML = cars.slice(0, 6).map(card).join("");
+      const selected = new Set(["ducati-panigale", "kawasaki-h2"]);
+      function drawCompare() {
+        compareButtons.innerHTML = cars
+          .map(
+            (c) =>
+              `<button class="chip ${selected.has(c[0]) ? "active" : ""}" data-id="${c[0]}">${c[1]}</button>`,
+          )
+          .join("");
+        const picked = cars.filter((c) => selected.has(c[0]));
+        const rows = [
+          ["قیمت", (c) => price(c[6])],
+          ["سال ساخت", (c) => c[4]],
+          ["کارکرد", (c) => km(c[5])],
+          ["موتور", (c) => c[11]],
+          ["اسب بخار", (c) => faDigits(c[12]) + " اسب بخار"],
+          ["گیربکس", (c) => c[13]],
+          ["مصرف سوخت", (c) => c[14] + " / ۱۰۰ کیلومتر"],
+          ["شتاب ۰ تا ۱۰۰", (c) => c[15]],
+          ["نوع انتقال قدرت", (c) => c[16]],
+        ];
+        compareTable.innerHTML = `<thead><tr><th>مشخصات</th>${picked.map((c) => `<th><img src="${c[10]}" alt="${c[1]}" loading="lazy" decoding="async"><span>${c[1]}</span></th>`).join("")}</tr></thead><tbody>${rows
+          .map((r) => {
+            const vals = picked.map(r[1]);
+            return `<tr><th>${r[0]}</th>${vals.map((v, i) => `<td class="num ${i == 0 ? "goldcell" : ""}">${v}</td>`).join("")}</tr>`;
+          })
+          .join("")}</tbody>`;
+        document.querySelectorAll("#compareButtons .chip").forEach(
+          (b) =>
+            (b.onclick = () => {
+              selected.has(b.dataset.id)
+                ? selected.delete(b.dataset.id)
+                : (selected.add(b.dataset.id),
+                  selected.size > 3 && selected.delete([...selected][0]));
+              drawCompare();
+            }),
+        );
+      }
+      drawCompare();
+      function calc() {
+        down.max = total.value;
+        if (+down.value > +total.value) down.value = total.value;
+        const remain = Math.max(0, total.value - down.value),
+          fee = remain * 0.02 * (months.value / 12),
+          monthly = (remain + fee) / months.value;
+        totalText.textContent = price(+total.value);
+        downText.textContent = price(+down.value);
+        monthsText.textContent = faDigits(months.value) + " ماه";
+        rDown.textContent = price(+down.value);
+        rRemain.textContent = price(remain);
+        rMonths.textContent = faDigits(months.value) + " قسط";
+        rMonthly.textContent = price(Math.round(monthly));
+      }
+      ["total", "down", "months"].forEach((id) =>
+        document.getElementById(id).addEventListener("input", calc),
+      );
+      calc();
+      advancedBtn.onclick = () => advanced.classList.toggle("open");
+      menuBtn.onclick = () => {
+        mobileMenu.classList.toggle("open");
+        menuBtn.textContent = mobileMenu.classList.contains("open")
+          ? "×"
+          : "☰";
+      };
+      // Only touch the DOM when the scrolled state actually flips — the old
+      // handler rewrote className on every scroll event, forcing a full
+      // style recalc (and a blur-layer rebuild) while scrubbing the hero.
+      let headerScrolled = null;
+      const syncHeader = () => {
+        const s = scrollY > 24;
+        if (s === headerScrolled) return;
+        headerScrolled = s;
+        header.classList.toggle("scrolled", s);
+        navShell.className = "nav-shell " + (s ? "glass-strong" : "glass");
+      };
+      addEventListener("scroll", syncHeader, { passive: true });
+      syncHeader();
+      document
+        .querySelectorAll(".faq-q")
+        .forEach(
+          (b) => (b.onclick = () => b.parentElement.classList.toggle("open")),
+        );
+      const io = new IntersectionObserver(
+        (es) =>
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              e.target.querySelectorAll("[data-count]").forEach((el) => {
+                const to = +el.dataset.count,
+                  start = performance.now();
+                function tick(now) {
+                  const p = Math.min(1, (now - start) / 1800),
+                    v = Math.round(to * (1 - Math.pow(1 - p, 3)));
+                  el.textContent = "+" + faDigits(v);
+                  if (p < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+              });
+            }
+          }),
+        { threshold: 0.16 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
