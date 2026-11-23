@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fa" dir="rtl">
   <head>
     <meta charset="utf-8" />
@@ -198,6 +198,15 @@
         border-radius: 999px;
         padding: 0.75rem 1.25rem;
         transition: all 0.7s var(--ease-lux);
+        /* Solid background instead of backdrop blur: the fixed header sits
+           over the scrubbing hero video, and blurring it every frame is
+           very expensive. Visually identical on the dark hero. */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(18, 17, 15, 0.82);
+      }
+      .site-header.scrolled .nav-shell {
+        background: rgba(18, 17, 15, 0.92);
       }
       .brand {
         display: flex;
@@ -287,6 +296,9 @@
         height: 100svh;
         min-height: 680px;
         overflow: hidden;
+        isolation: isolate;
+        contain: layout paint;
+        background: var(--background);
       }
       .hero video {
         position: absolute;
@@ -294,6 +306,9 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        background: var(--background);
       }
       .hero:before {
         content: "";
@@ -301,7 +316,7 @@
         inset: 0;
         background: rgba(7, 7, 7, 0.65);
         opacity: var(--hero-shade, 0.12);
-        transition: opacity 0.2s linear;
+        will-change: opacity;
       }
       .hero:after {
         content: "";
@@ -314,7 +329,7 @@
           rgba(7, 7, 7, 0.6)
         );
         opacity: var(--hero-grade, 0.08);
-        transition: opacity 0.2s linear;
+        will-change: opacity;
       }
       .hero-intro {
         position: absolute;
@@ -325,6 +340,7 @@
         text-align: center;
         pointer-events: none;
         color: #050505;
+        will-change: transform, opacity;
       }
       .hero-intro-inner {
         opacity: 0;
@@ -380,6 +396,16 @@
         opacity: 0;
         transform: translateY(24px);
         pointer-events: none;
+        will-change: transform, opacity;
+      }
+      /* Elements sitting over the scrubbing video: backdrop blur there
+         forces a full repaint every frame. Use a solid translucent
+         background instead — identical look on the dark hero, no blur
+         cost. */
+      .hero .glass {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(18, 17, 15, 0.72);
       }
       .hero-inner.hero-ready {
         pointer-events: auto;
@@ -441,9 +467,25 @@
         opacity: 0;
         transform: translateY(24px);
         pointer-events: none;
+        will-change: transform, opacity;
       }
       .hero-sequence > .search.hero-ready {
         pointer-events: auto;
+      }
+      /* backdrop-filter over a video that is being scrubbed frame by frame
+         re-blurs the whole layer on every seek. While the sequence is still
+         scrolling we use a solid translucent background (same look on the
+         dark hero); the real blur is restored by JS once the video has come
+         to rest at the end of the sequence, where it costs nothing. */
+      .hero-sequence > .search .search-box {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(18, 17, 15, 0.92);
+      }
+      .hero-sequence > .search.hero-settled .search-box {
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        background: rgba(18, 17, 15, 0.82);
       }
       .search-box {
         border-radius: 2rem;
@@ -1033,6 +1075,10 @@
             muted
             playsinline
             preload="auto"
+            disablepictureinpicture
+            aria-hidden="true"
+            tabindex="-1"
+            poster="assets/hero-poster.jpg"
             src="assets/hero%20video.mp4"
           ></video>
           <div
@@ -1219,6 +1265,8 @@
           <img
             src="./assets/showroom.jpg"
             alt="شوروم لوکس موتورز"
+            loading="lazy"
+            decoding="async"
           />
           <div>
             <div class="eyebrow">تجربه خرید متفاوت</div>
@@ -1238,10 +1286,14 @@
               <img
                 src="./assets/detail-interior.jpg"
                 alt="جزئیات کابین"
+                loading="lazy"
+                decoding="async"
                 style="border-radius: 1.25rem"
               /><img
                 src="./assets/detail-wheel.jpg"
                 alt="جزئیات چرخ"
+                loading="lazy"
+                decoding="async"
                 style="border-radius: 1.25rem"
               />
             </div>
@@ -1494,8 +1546,6 @@
         </div>
       </div>
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
       const faDigits = (n) => String(n).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
       const price = (n) => {
@@ -1519,7 +1569,6 @@
         if (!sequence || !hero || !video || !intro || !heroInner || !search)
           return;
         video.pause();
-        video.currentTime = 0;
         video.loop = false;
         video.autoplay = false;
         const revealStatic = () => {
@@ -1527,7 +1576,7 @@
           hero.style.setProperty("--hero-grade", "1");
           intro.style.opacity = 0;
           heroInner.classList.add("hero-ready");
-          search.classList.add("hero-ready");
+          search.classList.add("hero-ready", "hero-settled");
           heroInner.style.opacity = 1;
           heroInner.style.transform = "none";
           search.style.opacity = 1;
@@ -1556,9 +1605,21 @@
           targetTime = 0,
           displayTime = 0,
           duration = 1,
-          raf = 0;
+          raf = 0,
+          running = false,
+          inView = true,
+          lastApplied = -1,
+          lastSeek = -1;
         const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
+        // The hero video is encoded all-intra (every frame is a keyframe),
+        // so a seek decodes exactly one frame — but seeking twice into the
+        // same source frame is pure waste, so throttle to the frame step.
+        const SEEK_EPS = 1 / 30,
+          SETTLE_EPS = 0.012;
         const applyReveal = (p) => {
+          // Skip redundant DOM writes when progress hasn't moved.
+          if (Math.abs(p - lastApplied) < 0.0005) return;
+          lastApplied = p;
           const introP = clamp(p / 0.16),
             contentP = clamp((p - 0.58) / 0.36),
             searchP = clamp((p - 0.78) / 0.18);
@@ -1584,51 +1645,99 @@
           search.style.transform = `translateY(${24 * (1 - searchP)}px)`;
           search.classList.toggle("hero-ready", searchP > 0.96);
         };
-        const tick = () => {
-          displayTime += (targetTime - displayTime) * 0.18;
-          if (Math.abs(targetTime - displayTime) < 0.012)
-            displayTime = targetTime;
-          if (Number.isFinite(displayTime)) {
-            try {
-              video.currentTime = displayTime;
-            } catch (e) {}
-          }
-          applyReveal(progress);
+        const seekTo = (t) => {
+          if (!Number.isFinite(t)) return;
+          if (Math.abs(t - lastSeek) < SEEK_EPS) return;
+          if (video.seeking) return;
+          lastSeek = t;
+          try {
+            video.currentTime = t;
+          } catch (e) {}
+        };
+        const schedule = () => {
+          if (running || !inView || document.hidden) return;
+          running = true;
           raf = requestAnimationFrame(tick);
+        };
+        const tick = () => {
+          running = false;
+          displayTime += (targetTime - displayTime) * 0.25;
+          if (Math.abs(targetTime - displayTime) < SETTLE_EPS)
+            displayTime = targetTime;
+          seekTo(displayTime);
+          applyReveal(progress);
+          // Restore the search box's backdrop blur only while the scrub is
+          // at rest — blurring a video that is re-seeking every frame is the
+          // single most expensive paint in the hero.
+          search.classList.toggle(
+            "hero-settled",
+            displayTime === targetTime && !video.seeking && progress > 0.78,
+          );
+          // Keep the loop alive only while still settling; it restarts
+          // on scroll. This stops the previous always-on RAF that
+          // re-seeked and repainted every frame even when idle.
+          if (displayTime !== targetTime) schedule();
         };
         const setProgress = (p) => {
           progress = clamp(p);
           targetTime = duration * progress;
+          schedule();
         };
+        let scrollQueued = false;
         const manualProgress = () => {
-          const rect = sequence.getBoundingClientRect(),
-            travel = Math.max(1, sequence.offsetHeight - innerHeight);
-          setProgress(clamp(-rect.top / travel));
+          if (scrollQueued) return;
+          scrollQueued = true;
+          requestAnimationFrame(() => {
+            scrollQueued = false;
+            const rect = sequence.getBoundingClientRect(),
+              travel = Math.max(1, sequence.offsetHeight - innerHeight);
+            setProgress(clamp(-rect.top / travel));
+          });
         };
         const start = () => {
           duration = Math.max(0.1, video.duration || 1);
           displayTime = targetTime = 0;
-          video.currentTime = 0.001;
-          if (window.gsap && window.ScrollTrigger) {
-            gsap.registerPlugin(ScrollTrigger);
-            ScrollTrigger.create({
-              trigger: sequence,
-              start: "top top",
-              end: "bottom bottom",
-              scrub: true,
-              onUpdate: (self) => setProgress(self.progress),
-              invalidateOnRefresh: true,
-            });
-          } else {
-            addEventListener("scroll", manualProgress, { passive: true });
-            addEventListener("resize", manualProgress, { passive: true });
-            manualProgress();
-          }
-          cancelAnimationFrame(raf);
-          raf = requestAnimationFrame(tick);
+          lastSeek = -1;
+          try {
+            video.currentTime = 0.001;
+            lastSeek = 0.001;
+          } catch (e) {}
+          addEventListener("scroll", manualProgress, { passive: true });
+          addEventListener("resize", manualProgress, { passive: true });
+          new IntersectionObserver(
+            (entries) => {
+              inView = entries[0].isIntersecting;
+              if (inView) {
+                manualProgress();
+                schedule();
+              } else if (running) {
+                cancelAnimationFrame(raf);
+                running = false;
+              }
+            },
+            { threshold: 0 },
+          ).observe(sequence);
+          document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+              if (running) {
+                cancelAnimationFrame(raf);
+                running = false;
+              }
+            } else {
+              manualProgress();
+              schedule();
+            }
+          });
+          manualProgress();
+          applyReveal(progress);
+          schedule();
         };
-        video.addEventListener("loadedmetadata", start, { once: true });
-        video.load();
+        if (video.readyState >= 1) {
+          start();
+        } else {
+          video.addEventListener("loadedmetadata", start, { once: true });
+          video.load();
+        }
         
       })();
       const cars = [
@@ -1786,7 +1895,7 @@
         ],
       ];
       const card = (c) =>
-        `<article class="car-card hairline reveal"><a href="#"><div class="car-img"><img src="${c[10]}" alt="${c[1]} ${c[2]}"><div class="badges"><span class="badge glass">${c[3]}</span><span class="badge glass ${c[8] == "موجود" ? "gold" : ""}">${c[8]}</span></div></div><div class="card-body"><h3>${c[1]}</h3><p>${c[2]}</p><ul class="specs"><li>◷ <span class="num">${c[4]}</span></li><li>⌁ <span class="num">${km(c[5])}</span></li><li>⚙ <span>${c[7]}</span></li></ul><div class="price-row"><div><small>قیمت</small><strong class="num">${price(c[6])}</strong></div><span class="view">مشاهده خودرو ←</span></div></div></a></article>`;
+        `<article class="car-card hairline reveal"><a href="#"><div class="car-img"><img src="${c[10]}" alt="${c[1]} ${c[2]}" loading="lazy" decoding="async"><div class="badges"><span class="badge glass">${c[3]}</span><span class="badge glass ${c[8] == "موجود" ? "gold" : ""}">${c[8]}</span></div></div><div class="card-body"><h3>${c[1]}</h3><p>${c[2]}</p><ul class="specs"><li>◷ <span class="num">${c[4]}</span></li><li>⌁ <span class="num">${km(c[5])}</span></li><li>⚙ <span>${c[7]}</span></li></ul><div class="price-row"><div><small>قیمت</small><strong class="num">${price(c[6])}</strong></div><span class="view">مشاهده خودرو ←</span></div></div></a></article>`;
       featured.innerHTML = cars.slice(0, 6).map(card).join("");
       const selected = new Set(["porsche-911", "benz-s"]);
       function drawCompare() {
@@ -1808,7 +1917,7 @@
           ["شتاب ۰ تا ۱۰۰", (c) => c[15]],
           ["نوع دیفرانسیل", (c) => c[16]],
         ];
-        compareTable.innerHTML = `<thead><tr><th>مشخصات</th>${picked.map((c) => `<th><img src="${c[10]}" alt="${c[1]}"><span>${c[1]}</span></th>`).join("")}</tr></thead><tbody>${rows
+        compareTable.innerHTML = `<thead><tr><th>مشخصات</th>${picked.map((c) => `<th><img src="${c[10]}" alt="${c[1]}" loading="lazy" decoding="async"><span>${c[1]}</span></th>`).join("")}</tr></thead><tbody>${rows
           .map((r) => {
             const vals = picked.map(r[1]);
             return `<tr><th>${r[0]}</th>${vals.map((v, i) => `<td class="num ${i == 0 ? "goldcell" : ""}">${v}</td>`).join("")}</tr>`;
@@ -1851,15 +1960,19 @@
           ? "×"
           : "☰";
       };
-      addEventListener(
-        "scroll",
-        () => {
-          const s = scrollY > 24;
-          header.classList.toggle("scrolled", s);
-          navShell.className = "nav-shell " + (s ? "glass-strong" : "glass");
-        },
-        { passive: true },
-      );
+      // Only touch the DOM when the scrolled state actually flips — the old
+      // handler rewrote className on every scroll event, forcing a full
+      // style recalc (and a blur-layer rebuild) while scrubbing the hero.
+      let headerScrolled = null;
+      const syncHeader = () => {
+        const s = scrollY > 24;
+        if (s === headerScrolled) return;
+        headerScrolled = s;
+        header.classList.toggle("scrolled", s);
+        navShell.className = "nav-shell " + (s ? "glass-strong" : "glass");
+      };
+      addEventListener("scroll", syncHeader, { passive: true });
+      syncHeader();
       document
         .querySelectorAll(".faq-q")
         .forEach(
